@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ author.last_name}} {{ author.first_name }}</h1>
+
+  <p><strong>Born:</strong>{{ author.date_of_birth }}</p> <!-- author detail link not yet defined -->
+  <p><strong>Died:</strong> {{ author.date_of_death }}</p>
+  
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Books: </h4>
+    <hr>
+
+    {% for pos in author.book_set.all %}
+      
+      <div><a href=' {{pos.get_absolute_url}} '>{{ pos.title }} </a><bold class="font-weight-bold">({{ pos.bookinstance_set.all.count}})</bold>
+      <p class="font-italic">{{ pos.summary }}</p>
+      </div>
+      <hr>
+    {% endfor %}
+  </div>
+{% endblock %}

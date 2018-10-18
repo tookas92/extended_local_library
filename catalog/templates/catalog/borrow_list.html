@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Book List available for borrowing.</h1>
+  {% if available %}
+  <ul>
+    {% for book in available %}
+    {% if book.count %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}}) (Number of copies avaiable : {{book.count}}   ) 
+      </li>
+    {% endif %}
+    {% endfor %}
+    {% if user.is_staff %}
+    <div>
+    <a href="{% url 'book_create' %}" class='btn btn-dark'>ADD NEW BOOK</a>
+	</div>
+	{% endif %}
+  </ul>
+  {% else %}
+    <p>There are no books available for borrowing.</p>
+  {% endif %}       
+{% endblock %}

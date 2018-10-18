@@ -1,0 +1,16 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+*{padding: 0;
+    margin: 0
+}
+.item {
+    margin-left:10px;
+    margin-right: 10px;
+}
+.sidebar-nav ul {
+	list-style-type: none;
+}
