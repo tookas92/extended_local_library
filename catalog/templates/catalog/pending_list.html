@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Book List waiting for collection</h1>
+  {% if reserved %}
+  <ul>
+    {% for copy in reserved %}
+      <li>
+        <a href="{{ copy.book.get_absolute_url }}">{{ copy.book.title }}</a> ({{copy.book.author}}) (borrower : {{copy.borrower}}   ){% if user.is_staff %} <a class="btn btn-outline-dark btn-sm" href="{% url 'book_collect' copy.id %}">Set as collected.</a> {%endif%}
+      </li>
+    {% endfor %}
+
+  </ul>
+  {% else %}
+    <p>There are no books pending.</p>
+  {% endif %}       
+{% endblock %}

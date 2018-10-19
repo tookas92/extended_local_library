@@ -15,7 +15,7 @@ urlpatterns += [
          name='my-borrowed'),
 ]
 urlpatterns += [
-    path('allbooks/', views.LoanedBooksByLibrarianListView.as_view(),
+    path('allborrowed/', views.LoanedBooksByLibrarianListView.as_view(),
          name='all-borrowed'),
 ]
 urlpatterns += [
@@ -48,4 +48,6 @@ urlpatterns += [
     path('books/borrow', views.Borrow, name='book_borrow'),
     path('book/<uuid:pk>/borrow', views.reserve_book_library_member,
          name='book_reserve'),
+    path('books/pending', views.reserved_list, name='book_reserved'),
+    path('book/<uuid:pk>/collect', views.collect_book_library_member, name='book_collect'),
 ]

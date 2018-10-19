@@ -226,8 +226,38 @@ def reserve_book_library_member(request, pk):
         book_instance.save()
         return HttpResponseRedirect(
             reverse('book-detail', kwargs={'pk': book_instance.book.pk}))
+
     context = {
-        'book': book_instance,
+        'book_instance': book_instance,
     }
 
     return render(request, 'catalog/book_confirm_reserve.html', context)
+
+
+def reserved_list(request):
+    """View for books marked as Reserved"""
+    reserved = BookInstance.objects.filter(status='r')
+    context = {
+        'reserved': reserved
+    }
+    return render(request, 'catalog/pending_list.html', context=context)
+
+
+@permission_required('catalog.can_mark_returned')
+def collect_book_library_member(request, pk):
+
+    book_instance = get_object_or_404(BookInstance, pk=pk)
+    if request.method == 'POST':
+
+        book_instance.status = 'o'
+        book_instance.due_back = datetime.date.today()+ datetime.timedelta(weeks=3)
+        book_instance.save()
+        print(book_instance.due_back)
+        return HttpResponseRedirect(
+            reverse('book-detail', kwargs={'pk': book_instance.book.pk}))
+
+    context = {
+        'book_instance': book_instance,
+    }
+
+    return render(request, 'catalog/book_confirm_collected.html', context)

@@ -4,11 +4,11 @@
 
 <h1>Reserve book</h1>
 
-<p>Are you sure you want to reserve the book: {{ book.title }}?</p>
+<p>Are you sure you want to reserve the book: {{ book_instance.book.title }}?</p>
 
 <form action="" method="POST">
   {% csrf_token %}
-  <input type="submit" value="Yes, reserve.">
+  <input type="submit" value="Yes, reserve." class='btn btn-dark'>  
 </form>
 
 {% endblock %}

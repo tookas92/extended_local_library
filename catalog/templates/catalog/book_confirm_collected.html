@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Reserve book</h1>
+
+<p>Are you sure you want set as collected the book: {{ book_instance.book.title }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Set as collected." class='btn btn-dark'>  
+</form>
+
+{% endblock %}
