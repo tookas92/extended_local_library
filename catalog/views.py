@@ -6,12 +6,12 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
-
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
-
+from django.contrib.auth.forms import UserCreationForm
 from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Count, Q
@@ -261,3 +261,18 @@ def collect_book_library_member(request, pk):
     }
 
     return render(request, 'catalog/book_confirm_collected.html', context)
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'catalog/signup.html', {'form': form})

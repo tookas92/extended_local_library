@@ -51,3 +51,6 @@ urlpatterns += [
     path('books/pending', views.reserved_list, name='book_reserved'),
     path('book/<uuid:pk>/collect', views.collect_book_library_member, name='book_collect'),
 ]
+urlpatterns += [
+    path('signup/', views.signup, name='signup'),
+]
