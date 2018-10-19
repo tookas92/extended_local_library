@@ -45,5 +45,7 @@ urlpatterns += [
          name='book_delete_instance'),
 ]
 urlpatterns += [
-    path('books/borrow', views.Borrow, name='book_borrow')
+    path('books/borrow', views.Borrow, name='book_borrow'),
+    path('book/<uuid:pk>/borrow', views.reserve_book_library_member,
+         name='book_reserve'),
 ]

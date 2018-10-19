@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
@@ -212,3 +212,22 @@ def Borrow(request):
         'available': available
     }
     return render(request, 'catalog/borrow_list.html', context=context)
+
+
+@login_required
+def reserve_book_library_member(request, pk):
+
+    book_instance = get_object_or_404(BookInstance, pk=pk)
+    if request.method == 'POST':
+
+        book_instance.status = 'r'
+        book_instance.borrower = request.user
+        print(request.user)
+        book_instance.save()
+        return HttpResponseRedirect(
+            reverse('book-detail', kwargs={'pk': book_instance.book.pk}))
+    context = {
+        'book': book_instance,
+    }
+
+    return render(request, 'catalog/book_confirm_reserve.html', context)

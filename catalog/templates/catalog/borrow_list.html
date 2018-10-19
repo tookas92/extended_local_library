@@ -11,11 +11,7 @@
       </li>
     {% endif %}
     {% endfor %}
-    {% if user.is_staff %}
-    <div>
-    <a href="{% url 'book_create' %}" class='btn btn-dark'>ADD NEW BOOK</a>
-	</div>
-	{% endif %}
+
   </ul>
   {% else %}
     <p>There are no books available for borrowing.</p>
